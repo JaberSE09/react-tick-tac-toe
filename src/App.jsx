@@ -41,7 +41,7 @@ function Board({ xIsNext, squares, onPlay, index }) {
     status = 'Winner: ' + winner;
   } else {
     if (index < 0 || index === undefined) {  
-      status = 'Next player: ' + (xIsNext ? 'X' : 'O' +" move: " + " index: " + 0);
+      status = 'Next player: ' + (xIsNext ? 'X' : 'O') + " move: " + 0;
     } else {
       status = 'Next player: ' + (xIsNext ? 'X' : 'O') + " move: " + index;
     }
@@ -86,8 +86,8 @@ export default function Game() {
   }
 
   const moves = history.map((squares, move) => {
+    const isCurrentMove = move === currentMove;
     let description;
-    
     if (move > 0) {
       description = 'Go to move #' + move;
     } else {
@@ -95,7 +95,11 @@ export default function Game() {
     }
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        {isCurrentMove ? (
+          move === 0 ? 'You are at game start' : 'You are at move #' + move
+        ) : (
+          <button onClick={() => jumpTo(move)}>{description}</button>
+        )}
       </li>
     );
   });
